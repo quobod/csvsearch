@@ -2,7 +2,7 @@
 
 ### _I had recently started some Python tutorials for learning and so this project is for reference_
 
-#### This repo is a working reference project. This program performs some common network reconnaisance tasks.
+#### This repo is a working reference project. This program searches CSV files and will eventually include JSON and text files.
 
 ---
 
