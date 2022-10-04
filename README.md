@@ -1,6 +1,6 @@
-## Pythonic Network Tools
+## Pythonic Desktop Tools
 
-### _I had recently started some Python tutorials and so this project is for reference_
+### _I had recently started some Python tutorials for learning and so this project is for reference_
 
 #### This repo is a working reference project. This program performs some common network reconnaisance tasks.
 
