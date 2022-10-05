@@ -49,9 +49,11 @@ def search_csv_file(file_path, keyword):
 def print_csv_file(file_path):
     with open(file_path, newline="") as f:
         line = csv.reader(f, delimiter=",", quotechar='"')
-
-        for row in line:
-            print("{}".format(ROW))
+        try:
+            for row in line:
+                print("{}".format(row))
+        except csv.Error as cerr:
+            pass
 
 
 def search_csv_file_thread(file_path, keyword, num_of_processes=3):
