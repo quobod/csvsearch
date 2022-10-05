@@ -25,6 +25,7 @@ def search_csv_file(file_path, keyword):
                         )
                 else:
                     print(row)
+                    return {"status": False, "data": row}
 
         except csv.Error as cerr:
             pass
