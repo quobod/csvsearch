@@ -4,3 +4,4 @@ help
 bin
 share
 *.txt
+*.csv

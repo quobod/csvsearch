@@ -23,6 +23,19 @@ def search_csv_file(file_path, keyword):
                                 url, lsep, uname, lsep, pwd, lsep
                             )
                         )
+
+                elif len(row) == 4:
+                    name = row[0]
+                    url = row[1]
+                    uname = row[2]
+                    pwd = row[3]
+
+                    if keyword in url or keyword in uname:
+                        found.append(
+                            "Name: {}{}URL: {}{}Username: {}{}Password: {}{}".format(
+                                name, lsep, url, lsep, uname, lsep, pwd, lsep
+                            )
+                        )
                 else:
                     print(row)
                     return {"status": False, "data": row}
