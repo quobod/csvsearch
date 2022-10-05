@@ -111,7 +111,8 @@ try:
                 if results["status"]:
                     found = results["data"]
                     print(*found, sep=lsep)
-                    exit_prog()
+
+                exit_prog()
 
             if file_ext == ".json":
                 file_type = (
