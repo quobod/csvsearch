@@ -100,18 +100,18 @@ try:
             file_ext = get_extension(file_path)
 
             if file_ext == ".csv":
-                if file_path:
-                    print(
-                        "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
-                            keyword, file_type, file_path, lsep
-                        )
+                print(
+                    "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                        keyword, file_type, file_path, lsep
                     )
+                )
 
-                    results = search_csv(file_path, keyword)
+                results = search_csv(file_path, keyword)
 
-                    if results["status"]:
-                        found = results["data"]
-                        print(*found, sep=lsep)
+                if results["status"]:
+                    found = results["data"]
+                    print(*found, sep=lsep)
+                    exit_prog()
 
             if file_ext == ".json":
                 file_type = (
@@ -147,8 +147,8 @@ try:
                 print("{}{}".format(w_msg, lsep))
                 exit_prog()
 
-            else:
-                exit_prog()
+        else:
+            exit_prog()
     elif not args.file == None:
         # Check if file path exists
         file_path = args.file[0]
