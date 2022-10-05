@@ -65,6 +65,7 @@ args = parser.parse_args()
 keyword = args.key[0]
 file_type = None
 file_path = None
+file_ext = None
 
 if args.text:
     file_type = (
@@ -96,19 +97,58 @@ try:
         file_path = open_file_type(file_type)
 
         if file_path:
-            print(
-                "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
-                    keyword, file_type, file_path, lsep
+            file_ext = get_extension(file_path)
+
+            if file_ext == ".csv":
+                if file_path:
+                    print(
+                        "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                            keyword, file_type, file_path, lsep
+                        )
+                    )
+
+                    results = search_csv(file_path, keyword)
+
+                    if results["status"]:
+                        found = results["data"]
+                        print(*found, sep=lsep)
+
+            if file_ext == ".json":
+                file_type = (
+                    "json files",
+                    "*.json",
                 )
-            )
 
-            results = search_csv(file_path, keyword)
+                w_msg_header = cus(255, 255, 112, "Warning!")
+                w_msg_body = cus(
+                    255,
+                    255,
+                    255,
+                    "This program cannot read .json files at the moment.",
+                )
+                w_msg = "{} {}".format(w_msg_header, w_msg_body)
+                print("{}{}".format(w_msg, lsep))
+                exit_prog()
 
-            if results["status"]:
-                found = results["data"]
-                print(*found, sep=lsep)
-        else:
-            exit_prog()
+            if file_ext == ".txt":
+                file_type = (
+                    "text files",
+                    "*.txt",
+                )
+
+                w_msg_header = cus(255, 255, 112, "Warning!")
+                w_msg_body = cus(
+                    255,
+                    255,
+                    255,
+                    "This program cannot read .txt files at the moment.",
+                )
+                w_msg = "{} {}".format(w_msg_header, w_msg_body)
+                print("{}{}".format(w_msg, lsep))
+                exit_prog()
+
+            else:
+                exit_prog()
     elif not args.file == None:
         # Check if file path exists
         file_path = args.file[0]
