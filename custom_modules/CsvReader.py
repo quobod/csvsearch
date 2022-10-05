@@ -12,16 +12,20 @@ def search_csv_file(file_path, keyword):
 
         try:
             for row in line:
-                url = row[0]
-                uname = row[1]
-                pwd = row[2]
+                if len(row) == 3:
+                    url = row[0]
+                    uname = row[1]
+                    pwd = row[2]
 
-                if keyword in url or keyword in uname:
-                    found.append(
-                        "URL: {}{}Username: {}{}Password: {}{}".format(
-                            url, lsep, uname, lsep, pwd, lsep
+                    if keyword in url or keyword in uname:
+                        found.append(
+                            "URL: {}{}Username: {}{}Password: {}{}".format(
+                                url, lsep, uname, lsep, pwd, lsep
+                            )
                         )
-                    )
+                else:
+                    print(row)
+
         except csv.Error as cerr:
             pass
 

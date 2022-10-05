@@ -82,8 +82,9 @@ if args.json:
         "*.json",
     )
 
+
 try:
-    if not args.file:
+    if args.file == None:
         # If file type is not chosen, then default to .csv
         if not file_type:
             file_type = (
@@ -108,7 +109,7 @@ try:
                 print(*found, sep=lsep)
         else:
             exit_prog()
-    elif args.file:
+    elif not args.file == None:
         # Check if file path exists
         file_path = args.file[0]
 
@@ -136,11 +137,34 @@ try:
                         "*.csv",
                     )
 
+                    print(
+                        "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
+                            keyword, file_type, file_path, lsep
+                        )
+                    )
+
+                    results = search_csv(file_path, keyword)
+
+                    if results["status"]:
+                        found = results["data"]
+                        print(*found, sep=lsep)
+
                 if file_ext == ".json":
                     file_type = (
                         "json files",
                         "*.json",
                     )
+
+                    w_msg_header = cus(255, 255, 112, "Warning!")
+                    w_msg_body = cus(
+                        255,
+                        255,
+                        255,
+                        "This program cannot read .json files at the moment.",
+                    )
+                    w_msg = "{} {}".format(w_msg_header, w_msg_body)
+                    print("{}{}".format(w_msg, lsep))
+                    exit_prog()
 
                 if file_ext == ".txt":
                     file_type = (
@@ -148,17 +172,17 @@ try:
                         "*.txt",
                     )
 
-                print(
-                    "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
-                        keyword, file_type, file_path, lsep
+                    w_msg_header = cus(255, 255, 112, "Warning!")
+                    w_msg_body = cus(
+                        255,
+                        255,
+                        255,
+                        "This program cannot read .txt files at the moment.",
                     )
-                )
+                    w_msg = "{} {}".format(w_msg_header, w_msg_body)
+                    print("{}{}".format(w_msg, lsep))
+                    exit_prog()
 
-            results = search_csv(file_path, keyword)
-
-            if results["status"]:
-                found = results["data"]
-                print(*found, sep=lsep)
             exit_prog()
     else:
         exit_prog()
