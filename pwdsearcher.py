@@ -66,56 +66,63 @@ file_type = (
     "*.csv",
 )
 
+
+def handle_std_input(cus, args, keyword, file_type):
+    file_path = args.file[0]
+
+    if file_exists(file_path):
+        file_ext = get_extension(file_path)
+        if file_ext == ".csv":
+            print(
+                "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
+                    keyword, file_type, file_path, lsep
+                )
+            )
+
+            results = search_csv(file_path, keyword)
+            status = results["status"]
+
+            if status:
+                data = results["data"]
+                print(*data, sep=lsep)
+        else:
+            e_msg_header = cus(255, 133, 133, "Error")
+            e_msg_body = cus(
+                255,
+                255,
+                255,
+                "Expected a .csv file but received a '{}' file".format(file_ext),
+            )
+            e_msg = "{} {}{}".format(e_msg_header, e_msg_body, lsep)
+            print("{}".format(e_msg))
+
+
+def handle_file_dialog(keyword, file_type):
+    file_path = open_file_type(file_type)
+
+    if file_path:
+        print(
+            "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                keyword, file_type, file_path, lsep
+            )
+        )
+
+        results = search_csv(file_path, keyword)
+        status = results["status"]
+
+        if status:
+            data = results["data"]
+            print(*data, sep=lsep)
+
+
 try:
     if args.search:
         keyword = args.search[0]
 
         if args.dia:
-            file_path = open_file_type(file_type)
-
-            if file_path:
-                print(
-                    "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
-                        keyword, file_type, file_path, lsep
-                    )
-                )
-
-                results = search_csv(file_path, keyword)
-                status = results["status"]
-
-                if status:
-                    data = results["data"]
-                    print(*data, sep=lsep)
+            handle_file_dialog(keyword, file_type)
         elif args.file:
-            file_path = args.file[0]
-
-            if file_exists(file_path):
-                file_ext = get_extension(file_path)
-                if file_ext == ".csv":
-                    print(
-                        "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
-                            keyword, file_type, file_path, lsep
-                        )
-                    )
-
-                    results = search_csv(file_path, keyword)
-                    status = results["status"]
-
-                    if status:
-                        data = results["data"]
-                        print(*data, sep=lsep)
-                else:
-                    e_msg_header = cus(255, 133, 133, "Error")
-                    e_msg_body = cus(
-                        255,
-                        255,
-                        255,
-                        "Expected a .csv file but received a '{}' file".format(
-                            file_ext
-                        ),
-                    )
-                    e_msg = "{} {}{}".format(e_msg_header, e_msg_body, lsep)
-                    print("{}".format(e_msg))
+            handle_std_input(cus, args, keyword, file_type)
     exit_prog()
 except ValueError as ve:
     print(ve)
