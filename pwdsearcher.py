@@ -74,6 +74,12 @@ try:
             file_path = open_file_type(file_type)
 
             if file_path:
+                print(
+                    "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                        keyword, file_type, file_path, lsep
+                    )
+                )
+
                 results = search_csv(file_path, keyword)
                 status = results["status"]
 
@@ -86,12 +92,17 @@ try:
             if file_exists(file_path):
                 file_ext = get_extension(file_path)
                 if file_ext == ".csv":
+                    print(
+                        "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                            keyword, file_type, file_path, lsep
+                        )
+                    )
                     results = search_csv(file_path, keyword)
-                status = results["status"]
+                    status = results["status"]
 
-                if status:
-                    data = results["data"]
-                    print(*data, sep=lsep)
+                    if status:
+                        data = results["data"]
+                        print(*data, sep=lsep)
 except ValueError as ve:
     print(ve)
     exit_prog()
