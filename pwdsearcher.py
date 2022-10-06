@@ -97,6 +97,7 @@ try:
                             keyword, file_type, file_path, lsep
                         )
                     )
+
                     results = search_csv(file_path, keyword)
                     status = results["status"]
 
