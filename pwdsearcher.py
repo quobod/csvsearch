@@ -33,200 +33,65 @@ parser.version = vers
 group = parser.add_mutually_exclusive_group()
 
 group.add_argument(
-    "-j",
-    "--json",
-    dest="json",
-    action="store_true",
-    help="Indicates the file type is .json",
+    "-f",
+    "--file",
+    dest="file",
+    nargs=1,
+    help="Indicates the file path from standard input. Used with the search option.",
 )
 
 group.add_argument(
-    "-c",
-    "--csv",
-    dest="csv",
+    "-d",
+    "--dia",
+    dest="dia",
     action="store_true",
-    help="Indicates the file type is .csv",
+    help="Indicates the file path from file dialog. Used with the search option.",
 )
 
-group.add_argument(
-    "-t",
-    "--text",
-    dest="text",
-    action="store_true",
-    help="Indicates the file type is .txt",
+parser.add_argument(
+    "-p", "--print", action="store_true", help="Print the entire document."
 )
 
-parser.add_argument("-f", "--file", nargs=1, help="The file to search")
-
-parser.add_argument("-k", "--key", nargs=1, help="The search term", required=True)
+parser.add_argument(
+    "-s", "--search", nargs=1, help="Search the document for given search term."
+)
 
 args = parser.parse_args()
 
-keyword = args.key[0]
-file_type = None
+keyword = None
 file_path = None
 file_ext = None
-
-if args.text:
-    file_type = (
-        "text files",
-        "*.txt",
-    )
-if args.csv:
-    file_type = (
-        "csv files",
-        "*.csv",
-    )
-if args.json:
-    file_type = (
-        "json files",
-        "*.json",
-    )
-
+file_type = (
+    "csv files",
+    "*.csv",
+)
 
 try:
-    if args.file == None:
-        # If file type is not chosen, then default to .csv
-        if not file_type:
-            file_type = (
-                "csv files",
-                "*.csv",
-            )
+    if args.search:
+        keyword = args.search[0]
 
-        # Check if user chose a file. If file was not chosen, exit the program.
-        file_path = open_file_type(file_type)
+        if args.dia:
+            file_path = open_file_type(file_type)
 
-        if file_path:
-            file_ext = get_extension(file_path)
-
-            if file_ext == ".csv":
-                print(
-                    "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
-                        keyword, file_type, file_path, lsep
-                    )
-                )
-
+            if file_path:
                 results = search_csv(file_path, keyword)
+                status = results["status"]
 
-                if results["status"]:
-                    found = results["data"]
-                    print(*found, sep=lsep)
+                if status:
+                    data = results["data"]
+                    print(*data, sep=lsep)
+        elif args.file:
+            file_path = args.file[0]
 
-                exit_prog()
-
-            if file_ext == ".json":
-                file_type = (
-                    "json files",
-                    "*.json",
-                )
-
-                w_msg_header = cus(255, 255, 112, "Warning!")
-                w_msg_body = cus(
-                    255,
-                    255,
-                    255,
-                    "This program cannot read .json files at the moment.",
-                )
-                w_msg = "{} {}".format(w_msg_header, w_msg_body)
-                print("{}{}".format(w_msg, lsep))
-                exit_prog()
-
-            if file_ext == ".txt":
-                file_type = (
-                    "text files",
-                    "*.txt",
-                )
-
-                w_msg_header = cus(255, 255, 112, "Warning!")
-                w_msg_body = cus(
-                    255,
-                    255,
-                    255,
-                    "This program cannot read .txt files at the moment.",
-                )
-                w_msg = "{} {}".format(w_msg_header, w_msg_body)
-                print("{}{}".format(w_msg, lsep))
-                exit_prog()
-
-        else:
-            exit_prog()
-    elif not args.file == None:
-        # Check if file path exists
-        file_path = args.file[0]
-
-        if file_exists(file_path):
-            # Filter the file for accepted types
-            file_ext = get_extension(file_path)
-
-            if file_ext != ".csv" and file_ext != ".json" and file_ext != ".txt":
-                e_msg_header = cus(255, 110, 110, "Error")
-                e_msg_body = cus(
-                    255,
-                    255,
-                    255,
-                    "Expected file types: .csv, .json or .txt, but received a {} file.".format(
-                        file_ext
-                    ),
-                )
-                e_msg = "{} {}".format(e_msg_header, e_msg_body)
-                raise ValueError(e_msg)
-            else:
-                # Check and configure file type for display
+            if file_exists(file_path):
+                file_ext = get_extension(file_path)
                 if file_ext == ".csv":
-                    file_type = (
-                        "csv files",
-                        "*.csv",
-                    )
-
-                    print(
-                        "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
-                            keyword, file_type, file_path, lsep
-                        )
-                    )
-
                     results = search_csv(file_path, keyword)
+                status = results["status"]
 
-                    if results["status"]:
-                        found = results["data"]
-                        print(*found, sep=lsep)
-
-                if file_ext == ".json":
-                    file_type = (
-                        "json files",
-                        "*.json",
-                    )
-
-                    w_msg_header = cus(255, 255, 112, "Warning!")
-                    w_msg_body = cus(
-                        255,
-                        255,
-                        255,
-                        "This program cannot read .json files at the moment.",
-                    )
-                    w_msg = "{} {}".format(w_msg_header, w_msg_body)
-                    print("{}{}".format(w_msg, lsep))
-                    exit_prog()
-
-                if file_ext == ".txt":
-                    file_type = (
-                        "text files",
-                        "*.txt",
-                    )
-
-                    w_msg_header = cus(255, 255, 112, "Warning!")
-                    w_msg_body = cus(
-                        255,
-                        255,
-                        255,
-                        "This program cannot read .txt files at the moment.",
-                    )
-                    w_msg = "{} {}".format(w_msg_header, w_msg_body)
-                    print("{}{}".format(w_msg, lsep))
-                    exit_prog()
-
-            exit_prog()
-    else:
-        exit_prog()
+                if status:
+                    data = results["data"]
+                    print(*data, sep=lsep)
 except ValueError as ve:
     print(ve)
     exit_prog()
