@@ -104,6 +104,19 @@ try:
                     if status:
                         data = results["data"]
                         print(*data, sep=lsep)
+                else:
+                    e_msg_header = cus(255, 133, 133, "Error")
+                    e_msg_body = cus(
+                        255,
+                        255,
+                        255,
+                        "Expected a .csv file but received a '{}' file".format(
+                            file_ext
+                        ),
+                    )
+                    e_msg = "{} {}{}".format(e_msg_header, e_msg_body, lsep)
+                    print("{}".format(e_msg))
+    exit_prog()
 except ValueError as ve:
     print(ve)
     exit_prog()
