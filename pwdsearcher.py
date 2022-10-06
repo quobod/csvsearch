@@ -93,7 +93,7 @@ try:
                 file_ext = get_extension(file_path)
                 if file_ext == ".csv":
                     print(
-                        "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
+                        "Keyword: {}\nFile Type: {}\nFile Path: {}{}".format(
                             keyword, file_type, file_path, lsep
                         )
                     )
