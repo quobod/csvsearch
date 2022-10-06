@@ -9,7 +9,10 @@ from custom_modules.Utils import exit_prog
 from custom_modules.FileDialog import open_file_type
 from custom_modules.FileValidator import file_exists
 from custom_modules.FileInter import get_extension
-from custom_modules.CsvReader import search_csv_file_thread as search_csv
+from custom_modules.CsvReader import (
+    print_csv_file,
+    search_csv_file_thread as search_csv,
+)
 from custom_modules.PlatformConstants import LINE_SEP as lsep
 
 
@@ -48,9 +51,11 @@ group.add_argument(
     help="Indicates the file path from file dialog. Used with the search option.",
 )
 
-parser.add_argument("-p", "--print", nargs=1, help="Print the given .csv document.")
+parser.add_argument(
+    "-p", "--print", action="store_true", help="Print the .csv document."
+)
 
-parser.add_argument("-s", "--search", nargs=1, help="Search the given .csv file.")
+parser.add_argument("-s", "--search", nargs=1, help="Search the .csv file.")
 
 args = parser.parse_args()
 
@@ -119,6 +124,15 @@ try:
             handle_search_file_dialog(keyword, file_type)
         elif args.file:
             handle_search_std_input(cus, args, keyword, file_type)
+    elif args.print:
+        if args.dia:
+            file_path = open_file_type(file_type)
+        elif args.file:
+            file_path = args.file[0]
+
+        if file_path and file_exists(file_path) and get_extension(file_path) == ".csv":
+            print_csv_file(file_path)
+
     exit_prog()
 except ValueError as ve:
     print(ve)
