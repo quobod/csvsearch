@@ -67,7 +67,7 @@ file_type = (
 )
 
 
-def handle_std_input(cus, args, keyword, file_type):
+def handle_search_std_input(cus, args, keyword, file_type):
     file_path = args.file[0]
 
     if file_exists(file_path):
@@ -97,7 +97,7 @@ def handle_std_input(cus, args, keyword, file_type):
             print("{}".format(e_msg))
 
 
-def handle_file_dialog(keyword, file_type):
+def handle_search_file_dialog(keyword, file_type):
     file_path = open_file_type(file_type)
 
     if file_path:
@@ -120,9 +120,9 @@ try:
         keyword = args.search[0]
 
         if args.dia:
-            handle_file_dialog(keyword, file_type)
+            handle_search_file_dialog(keyword, file_type)
         elif args.file:
-            handle_std_input(cus, args, keyword, file_type)
+            handle_search_std_input(cus, args, keyword, file_type)
     exit_prog()
 except ValueError as ve:
     print(ve)
