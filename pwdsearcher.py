@@ -48,13 +48,9 @@ group.add_argument(
     help="Indicates the file path from file dialog. Used with the search option.",
 )
 
-parser.add_argument(
-    "-p", "--print", action="store_true", help="Print the entire document."
-)
+parser.add_argument("-p", "--print", nargs=1, help="Print the given .csv document.")
 
-parser.add_argument(
-    "-s", "--search", nargs=1, help="Search the document for given search term."
-)
+parser.add_argument("-s", "--search", nargs=1, help="Search the given .csv file.")
 
 args = parser.parse_args()
 
