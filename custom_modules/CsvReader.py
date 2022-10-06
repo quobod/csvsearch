@@ -1,5 +1,6 @@
 import csv
 from multiprocessing.pool import ThreadPool
+from threading import Thread
 from tkinter.tix import ROW
 from .PlatformConstants import LINE_SEP as lsep
 
@@ -60,3 +61,10 @@ def search_csv_file_thread(file_path, keyword, num_of_processes=3):
     pool = ThreadPool(processes=num_of_processes)
     async_results = pool.apply_async(search_csv_file, (file_path, keyword))
     return async_results.get()
+
+
+def print_csv_thread(file_path):
+    print_thread = Thread(target=print_csv_file, args=(file_path,))
+    print_thread.start()
+    print_thread.join()
+    print_thread = None
