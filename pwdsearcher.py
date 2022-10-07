@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import argparse
+from curses import KEY_CLEAR
 
 from pkg_resources import require
 

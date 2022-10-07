@@ -26,15 +26,15 @@ def search_csv_file(file_path, keyword):
                         )
 
                 elif len(row) == 4:
-                    name = row[0]
+                    website = row[0]
                     url = row[1]
                     uname = row[2]
                     pwd = row[3]
 
                     if keyword in url or keyword in uname:
                         found.append(
-                            "Name: {}{}URL: {}{}Username: {}{}Password: {}{}".format(
-                                name, lsep, url, lsep, uname, lsep, pwd, lsep
+                            "Website: {}{}URL: {}{}Username: {}{}Password: {}{}".format(
+                                website, lsep, url, lsep, uname, lsep, pwd, lsep
                             )
                         )
                 else:
