@@ -81,12 +81,12 @@ def search_csv_file(cus, args):
                 )
             )
 
-        results = search_csv(file_path, keyword)
-        status = results["status"]
+            results = search_csv(file_path, keyword)
+            status = results["status"]
 
-        if status:
-            data = results["data"]
-            print(*data, sep=lsep)
+            if status:
+                data = results["data"]
+                print(*data, sep=lsep)
     elif args.file:
         file_path = args.file[0]
 
