@@ -23,4 +23,5 @@ CONSOLE_MESSENGER_SWITCH = {
     "warning": warning,
     "success": success,
     "custom": custom,
+    "reset": lambda: Style.RESET_ALL,
 }

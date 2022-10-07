@@ -17,6 +17,10 @@ from custom_modules.CsvReader import (
 from custom_modules.PlatformConstants import LINE_SEP as lsep
 
 
+cus = cms["custom"]
+reset = cms["reset"]
+
+
 def make_help(text):
     return cus(255, 255, 255, text)
 
@@ -37,7 +41,6 @@ def error_handler(*args):
     exit_prog()
 
 
-cus = cms["custom"]
 desc = make_info("This program searches CSV files for login credentials.")
 epil = make_info(
     "Search files containing login data. Use a file dialog or provide absolute file path."
