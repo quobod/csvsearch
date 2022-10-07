@@ -63,7 +63,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-def search_csv_file(cus, args):
+def search_csv_file(args):
     keyword = args.search[0]
 
     file_type = (
@@ -119,7 +119,7 @@ def search_csv_file(cus, args):
 
 try:
     if args.search:
-        search_csv_file(cus, args)
+        search_csv_file(args)
     elif args.print:
         file_type = (
             "csv files",
