@@ -18,16 +18,20 @@ from custom_modules.PlatformConstants import LINE_SEP as lsep
 
 
 cus = cms["custom"]
-desc = "This program searches CSV, JSON and TXT files for login credentials."
+desc = "This program searches CSV files for login credentials."
 epil = "Search files containing login data. Use a file dialog or provide absolute file path."
 vers = "%prog 0.1"
 
 
 def error_handler(*args):
-    cus = cms["custom"]
-    arg = args[0]
-    cargs = cus(254, 60, 60, arg)
-    print("{}".format(cargs))
+    line = cus(255, 121, 121, "Error:{}".format(lsep))
+
+    for i, a in enumerate(args):
+        if i < (len(args) - 1):
+            line += cus(255, 255, 255, "{}{}".format(a, lsep))
+        else:
+            line += cus(255, 255, 255, "{}".format(a))
+    print("{}{}".format(line, lsep))
     exit_prog()
 
 
