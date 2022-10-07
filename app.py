@@ -89,31 +89,25 @@ args = parser.parse_args()
 
 def search_csv_file(args):
     keyword = args.search[0]
-
     file_type = (
         "csv files",
         "*.csv",
     )
-
     if args.dia:
         file_path = open_file_type(file_type)
-
         if file_path:
             print(
                 "Keyword: {}\nFile Type: {}\nFile Path: {}\nFile Dialog{}".format(
                     keyword, file_type, file_path, lsep
                 )
             )
-
             results = search_csv(file_path, keyword)
             status = results["status"]
-
             if status:
                 data = results["data"]
                 print(*data, sep=lsep)
     elif args.file:
         file_path = args.file[0]
-
         if file_exists(file_path):
             file_ext = get_extension(file_path)
             if file_ext == ".csv":
@@ -155,7 +149,6 @@ try:
             file_path = args.file[0]
         if file_path and file_exists(file_path) and get_extension(file_path) == ".csv":
             print_csv_file(file_path)
-    exit_prog()
 except ValueError as ve:
     print(ve)
 finally:

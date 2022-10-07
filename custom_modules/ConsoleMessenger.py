@@ -1,5 +1,6 @@
-import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style, init
+
+init()
 
 
 def error(arg=""):
